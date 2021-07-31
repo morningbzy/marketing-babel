@@ -1,18 +1,19 @@
 <template>
   <div id="app">
-    <Page msg="EC-Babel"/>
+    <!-- <img src="./assets/spec/ji_01.jpg" /> -->
+    <Page/>
   </div>
 </template>
 
 <script>
-import Page from './components/Page.vue'
+import Page from "./components/Page.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Page
-  }
-}
+    Page,
+  },
+};
 </script>
 
 <style>
