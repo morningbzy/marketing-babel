@@ -14,27 +14,24 @@
         </el-card>
       </draggable>
     </el-aside>
-    <el-main>
-      <el-card
-        shadow="never"
-        class="phone"
-        :body-style="{ padding: 0, height: '100%' }"
-      >
-        <draggable :list="x" group="people" class="phone-content">
-          <el-card
-            v-for="xi in x"
-            :key="xi.name"
+    <el-aside width="500px">
+      <el-card shadow="never" class="phone">
+        <draggable :list="widgets" group="people" class="phone-content">
+          <div
+            v-for="(w, idx) in widgets"
+            :key="`widget-${idx}`"
             shadow="hover"
-            body-style="{padding: '0px'}"
+            @click="onWidgetSelect(idx)"
+            class="widget-card"
           >
-            <component :is="xi.component" :haha="xi.name"></component>
-          </el-card>
+            <component :is="w.component" :w="w" :selected="editing == `widget-${idx}`"></component>
+          </div>
         </draggable>
       </el-card>
-    </el-main>
-    <el-aside>
-      <span>属性</span>
     </el-aside>
+    <el-main>
+      <span>属性</span>
+    </el-main>
   </el-container>
 </template>
 
@@ -57,7 +54,8 @@ export default {
   },
   data() {
     return {
-      x: [],
+      editing: '',
+      widgets: [],
       widgetTypes: [
         {
           name: "顶图",
@@ -75,9 +73,11 @@ export default {
       drag: false,
     };
   },
+  computed: {
+  },
   methods: {
-    log: function (e) {
-      window.console.log(e);
+    onWidgetSelect: function (idx) {
+      this.editing = `widget-${idx}`;
     },
   },
 };
@@ -89,8 +89,10 @@ export default {
 }
 
 .phone {
-  width: 375px;
-  height: 660px;
+  width: 415px;
+  height: 700px;
+  margin: 0 auto;
+  overflow: auto;
 }
 
 .phone .el-card {
@@ -98,6 +100,27 @@ export default {
 }
 
 .phone-content {
+  min-height: 100px;
   height: 100%;
+}
+
+.widget-card {
+  position: relative;
+  transition: 0.3s;
+}
+
+.widget-card [selected]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(64 158 255 / 50%);
+}
+
+
+.widget-card:hover {
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 50%);
 }
 </style>
